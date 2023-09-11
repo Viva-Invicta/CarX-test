@@ -1,30 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class SimpleTower : MonoBehaviour {
-	public float m_shootInterval = 0.5f;
-	public float m_range = 4f;
-	public GameObject m_projectilePrefab;
+public class SimpleTower : MonoBehaviour 
+{
+	public float shootInterval = 0.5f;
+	public float range = 4f;
+	public GameObject projectilePrefab;
 
-	private float m_lastShotTime = -0.5f;
+	private float lastShotTime = -0.5f;
 	
-	void Update () {
-		if (m_projectilePrefab == null)
+	void Update () 
+	{
+		if (projectilePrefab == null)
 			return;
 
-		foreach (var monster in FindObjectsOfType<Monster>()) {
-			if (Vector3.Distance (transform.position, monster.transform.position) > m_range)
+		foreach (var monster in FindObjectsOfType<Monster>()) 
+		{
+			if (Vector3.Distance (transform.position, monster.transform.position) > range)
 				continue;
 
-			if (m_lastShotTime + m_shootInterval > Time.time)
+			if (lastShotTime + shootInterval > Time.time)
 				continue;
 
-			// shot
-			var projectile = Instantiate(m_projectilePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity) as GameObject;
-			var projectileBeh = projectile.GetComponent<GuidedProjectile> ();
-			projectileBeh.m_target = monster.gameObject;
+            // shot
+            var projectile = Instantiate(projectilePrefab, transform.position + Vector3.up * 1.5f, Quaternion.identity);
+            var projectileBeh = projectile.GetComponent<GuidedProjectile>();
+			projectileBeh.target = monster.gameObject;
 
-			m_lastShotTime = Time.time;
+			lastShotTime = Time.time;
 		}
 	
 	}

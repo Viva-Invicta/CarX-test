@@ -1,31 +1,35 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Monster : MonoBehaviour {
 
-	public GameObject m_moveTarget;
-	public float m_speed = 0.1f;
-	public int m_maxHP = 30;
-	const float m_reachDistance = 0.3f;
+	public GameObject moveTarget;
 
-	public int m_hp;
+	public float speed = 0.1f;
+	public int maxHP = 30;
+	const float reachDistance = 0.3f;
 
-	void Start() {
-		m_hp = m_maxHP;
+	public int hp;
+
+	void Start() 
+	{
+		hp = maxHP;
 	}
 
-	void Update () {
-		if (m_moveTarget == null)
+	void Update () 
+	{
+		if (moveTarget == null)
 			return;
 		
-		if (Vector3.Distance (transform.position, m_moveTarget.transform.position) <= m_reachDistance) {
+		if (Vector3.Distance (transform.position, moveTarget.transform.position) <= reachDistance)
+		{
 			Destroy (gameObject);
 			return;
 		}
 
-		var translation = m_moveTarget.transform.position - transform.position;
-		if (translation.magnitude > m_speed) {
-			translation = translation.normalized * m_speed;
+		var translation = moveTarget.transform.position - transform.position;
+		if (translation.magnitude > speed)
+		{
+			translation = translation.normalized * speed;
 		}
 		transform.Translate (translation);
 	}
