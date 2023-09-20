@@ -4778,7 +4778,9 @@ GameObject:
   - component: {fileID: 3334546}
   - component: {fileID: 13564744}
   - component: {fileID: 2327986}
-  - component: {fileID: 11464742}
+  - component: {fileID: 7787932428938453133}
+  - component: {fileID: 1508920035590786590}
+  - component: {fileID: 4964041236025452735}
   m_Layer: 0
   m_Name: CannonProjectile
   m_TagString: Untagged
@@ -4873,7 +4875,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &11464742
+--- !u!114 &7787932428938453133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4882,8 +4884,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 123704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 019f8dc2a5c029b4ba931342c77e6736, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c42a2bb651a1174c8f8272607551e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 0.2
-  m_damage: 10
+  mover: {fileID: 1508920035590786590}
+  projectileType: 0
+  selectedTarget: {fileID: 0}
+--- !u!114 &1508920035590786590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee6646b50475da448dba5758a6c3d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+--- !u!114 &4964041236025452735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8355c2f8fc3c994aaea8f0e4e9f31a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 10

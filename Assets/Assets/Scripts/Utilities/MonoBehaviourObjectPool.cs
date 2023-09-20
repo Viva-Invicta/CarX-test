@@ -9,23 +9,28 @@ namespace TowerDefence
     {
         private readonly TMainComponent objectPrefab;
         private readonly int capacity;
+        private readonly Transform parent;
 
-        private HashSet<PoolableComponent<TMainComponent>> availableInstances;
-        private HashSet<PoolableComponent<TMainComponent>> lockedInstances;
+        private HashSet<Poolable> availableInstances;
+        private HashSet<Poolable> lockedInstances;
 
-        public MonoBehaviourObjectPool(int capacity, TMainComponent objectPrefab)
+        public MonoBehaviourObjectPool(int capacity, Transform parent, TMainComponent objectPrefab)
         {
             this.objectPrefab = objectPrefab;
             this.capacity = capacity;
+            this.parent = parent;
+
+            Initialize();
         }
 
-        public void Initialize()
+        private void Initialize()
         {
             Debug.Assert(objectPrefab);
             Debug.Assert(capacity > 0);
+            Debug.Assert(parent);
 
-            availableInstances = new HashSet<PoolableComponent<TMainComponent>>(capacity);
-            lockedInstances = new HashSet<PoolableComponent<TMainComponent>>(capacity);
+            availableInstances = new HashSet<Poolable>(capacity);
+            lockedInstances = new HashSet<Poolable>(capacity);
 
             for (var i = 0; i < capacity; i++)
             {
@@ -47,28 +52,36 @@ namespace TowerDefence
 
         public TMainComponent GetInstance()
         {
+            TMainComponent instance;
             if (availableInstances.Count == 0)
-                return AddNewInstance().CachedComponent;
+                instance = AddNewInstance().CachedComponent as TMainComponent;
             else
-                return availableInstances.First().CachedComponent;
+                instance = availableInstances.First().CachedComponent as TMainComponent;
+
+            instance.gameObject.SetActive(true);
+
+            return instance;
         }
 
-        private PoolableComponent<TMainComponent> AddNewInstance()
+        private Poolable AddNewInstance()
         {
             var instance = Object.Instantiate(objectPrefab).gameObject;
-            var poolableComponent = instance.AddComponent<PoolableComponent<TMainComponent>>();
+            var poolableComponent = instance.AddComponent<Poolable>();
 
-            instance.SetActive(false);
+            poolableComponent.CacheComponent<TMainComponent>();
 
             poolableComponent.Enabled += OnInstanceEnabled;
             poolableComponent.Disabled += OnInstanceDisabled;
+
+            instance.SetActive(false);
+            instance.gameObject.transform.SetParent(parent, worldPositionStays: false);
 
             availableInstances.Add(poolableComponent);
 
             return poolableComponent;
         }
 
-        private void DestroyInstance(PoolableComponent<TMainComponent> instance)
+        private void DestroyInstance(Poolable instance)
         {
             instance.Enabled -= OnInstanceEnabled;
             instance.Disabled -= OnInstanceDisabled;
@@ -76,13 +89,13 @@ namespace TowerDefence
             Object.Destroy(instance.gameObject);
         }
 
-        private void OnInstanceEnabled(PoolableComponent<TMainComponent> instance)
+        private void OnInstanceEnabled(Poolable instance)
         {
             availableInstances.Remove(instance);
             lockedInstances.Add(instance);
         }
 
-        private void OnInstanceDisabled(PoolableComponent<TMainComponent> instance)
+        private void OnInstanceDisabled(Poolable instance)
         {
             lockedInstances.Remove(instance);
             availableInstances.Add(instance);
