@@ -7,11 +7,11 @@ public class CollisionReciever : MonoBehaviour
 
     private void OnEnable()
     {
-        var collider = GetComponent<Collider>();    
+        collider = GetComponent<Collider>();    
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        EventBus.RaiseEvent(new CollisionEvent { Collider = collider, OtherCollider = collision.collider });
+        EventBus.RaiseEvent(new CollisionEvent { Collider = collider, OtherCollider = other });
     }
 }
