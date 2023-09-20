@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class TowerTargetStatusUpdatedEvent
 {
-    public Transform Target { get; private set; }
+    public TowerTarget Target { get; private set; }
     public bool IsAvailable { get; private set; }   
 
-    public TowerTargetStatusUpdatedEvent(Transform target, bool isAvailable)
+    public TowerTargetStatusUpdatedEvent(TowerTarget target, bool isAvailable)
     {
-        this.Target = target;
-        this.IsAvailable = isAvailable;
+        Target = target;
+        IsAvailable = isAvailable;
     }
 }

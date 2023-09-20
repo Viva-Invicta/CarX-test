@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 25
-  targetCheckFrequency: 2
+  targetCheckFrequency: 0.1
 --- !u!114 &713099639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93452e11f72a1754597c6e2b0fcfba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootInterval: 0.7
+  shootInterval: 2
   weapon: {fileID: 1920609369}
   targetSelector: {fileID: 713099638}
 --- !u!1 &780892719
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 25
-  targetCheckFrequency: 1
+  targetCheckFrequency: 0.1
 --- !u!114 &2062558237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93452e11f72a1754597c6e2b0fcfba9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootInterval: 0.5
+  shootInterval: 1
   weapon: {fileID: 1143686473}
   targetSelector: {fileID: 2062558236}
 --- !u!1660057539 &9223372036854775807

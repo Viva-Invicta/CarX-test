@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerTargetSelector : MonoBehaviour
 {
-    public event Action<Transform> TargetUpdated;
+    public event Action<TowerTarget> TargetUpdated;
 
     [SerializeField]
     private float range = 4f;
@@ -14,7 +14,7 @@ public class TowerTargetSelector : MonoBehaviour
 
     private float rangeSqr;
     private TowerTargetsService towerTargetsService;
-    private Transform selectedTarget;
+    private TowerTarget selectedTarget;
 
     private void OnEnable()
     {

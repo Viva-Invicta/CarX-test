@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class TowerTargetsService : IService
 {
-    private HashSet<Transform> availableTargets;
+    private HashSet<TowerTarget> availableTargets;
 
     public void Initialize()
     {
-        availableTargets = new HashSet<Transform>();
+        availableTargets = new HashSet<TowerTarget>();
         EventBus.Subscribe<TowerTargetStatusUpdatedEvent>(HandleTargetUpdated);
     }
 
-    public Transform GetNearestTargetFromPosition(Vector3 position, out float sqrDistance)
+    public TowerTarget GetNearestTargetFromPosition(Vector3 position, out float sqrDistance)
     {
-        Transform nearestTarget = null;
+        TowerTarget nearestTarget = null;
         sqrDistance = float.MaxValue;
 
         foreach (var target in availableTargets) 
         {
-            var sqrDistanceToAvailableTarget = (position - target.position).sqrMagnitude;
+            var sqrDistanceToAvailableTarget = (position - target.transform.position).sqrMagnitude;
 
             if (sqrDistanceToAvailableTarget < sqrDistance)
             {
@@ -46,13 +46,13 @@ public class TowerTargetsService : IService
         } 
     }
 
-    private void HandleTargetAdded(Transform target)
+    private void HandleTargetAdded(TowerTarget target)
     {
         if (!availableTargets.Contains(target))
             availableTargets.Add(target);
     }
 
-    private void HandleTargetRemoved(Transform target)
+    private void HandleTargetRemoved(TowerTarget target)
     {
         if (availableTargets.Contains(target))
             availableTargets.Remove(target);    

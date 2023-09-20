@@ -6,20 +6,20 @@ public class TowerWeapon : MonoBehaviour
     private const int PoolCapacity = 10;
 
     [SerializeField]
-    private Projectile projectilePrefab;
+    private TowerProjectile projectilePrefab;
 
     [SerializeField]
     private Transform shootPoint;
 
-    private Transform selectedTarget;
-    private MonoBehaviourObjectPool<Projectile> pool;
+    private TowerTarget selectedTarget;
+    private MonoBehaviourObjectPool<TowerProjectile> pool;
 
     private void OnEnable()
     {
-        pool = new MonoBehaviourObjectPool<Projectile>(PoolCapacity, transform, projectilePrefab);
+        pool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, transform, projectilePrefab);
     }
 
-    public void SetTarget(Transform target)
+    public void SetTarget(TowerTarget target)
     {
         selectedTarget = target;
     }

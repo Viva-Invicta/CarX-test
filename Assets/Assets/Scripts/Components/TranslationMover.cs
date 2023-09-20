@@ -3,12 +3,9 @@ using UnityEngine;
 
 public class TranslationMover : Mover
 {
-    private const float AchieveTreshold = 0.01f;
+    private const float AchieveTreshold = 0.05f;
 
     public override event Action TargetAchieved;
-
-    [SerializeField]
-    private float speed;
 
     private Vector3? targetPosition = null;
 
@@ -17,21 +14,54 @@ public class TranslationMover : Mover
         this.targetPosition = targetPosition;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (targetPosition.HasValue)
         {
-            var translation = targetPosition.Value - transform.position;
-            var magnitude = translation.magnitude;
+            var vectorToTarget = targetPosition.Value - transform.position;
+            var vectorToTargetMagnitude = vectorToTarget.magnitude;
 
-            if (magnitude < AchieveTreshold)
+            if (vectorToTargetMagnitude < AchieveTreshold)
             {
                 TargetAchieved?.Invoke();
                 return;
             }
 
-            translation = translation.normalized * speed * Time.deltaTime;
+            var translation = vectorToTarget.normalized * Speed;
+
+            if (translation.magnitude > vectorToTargetMagnitude)
+            {
+                TargetAchieved?.Invoke();
+                return;
+            }
+
             transform.Translate(translation);
         }
+    }
+
+    public override Vector3 CalculateFuturePosition(float seconds)
+    {
+        var translationsInSecond = 1f / Time.fixedDeltaTime;
+
+        var vectorToTarget = targetPosition.Value - transform.position;
+        var translation = vectorToTarget.normalized * Speed;
+
+        var futurePosition = transform.position + translation * translationsInSecond * seconds;
+
+        return futurePosition;
+    }
+
+    public override float CalculateTimeToPosition(Vector3 position)
+    {
+        var translationsInSecond = 1f / Time.fixedDeltaTime;
+
+        var vectorToPosition = position - transform.position;
+        var translation = vectorToPosition.normalized * Speed;
+        var translationMagnitude = translation.magnitude;
+
+        var speedPerSecond = translationMagnitude * translationsInSecond;
+        var time = vectorToPosition.magnitude / speedPerSecond;
+
+        return time;
     }
 }

@@ -27,7 +27,7 @@ public class Tower : MonoBehaviour
         targetSelector.TargetUpdated -= OnTargetUpdated;
     }
 
-    private void OnTargetUpdated(Transform target)
+    private void OnTargetUpdated(TowerTarget target)
     {
         weapon.SetTarget(target);
     }
