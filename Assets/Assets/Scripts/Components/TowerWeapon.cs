@@ -11,12 +11,15 @@ public class TowerWeapon : MonoBehaviour
     [SerializeField]
     private Transform shootPoint;
 
+    [SerializeField]
+    private Transform projectilesRoot;
+
     private TowerTarget selectedTarget;
     private MonoBehaviourObjectPool<TowerProjectile> pool;
 
     private void OnEnable()
     {
-        pool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, transform, projectilePrefab);
+        pool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, projectilesRoot, projectilePrefab);
     }
 
     public void SetTarget(TowerTarget target)
