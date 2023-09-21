@@ -11,16 +11,16 @@ public class WeaponRotator : MonoBehaviour
     [SerializeField]
     private float targetAngle = 5f;
 
-    private TowerTarget selectedTarget;
+    private Vector3? targetPosition;
     
     public bool IsLookingAtTarget
     {
         get
         {
-            if (!selectedTarget)
+            if (!targetPosition.HasValue)
                 return false;
 
-            var targetDirection = selectedTarget.transform.position - weapon.transform.position;
+            var targetDirection = targetPosition.Value - weapon.transform.position;
             var angle = Vector3.Angle(weapon.transform.forward, targetDirection);
 
             return angle <= targetAngle;
@@ -29,17 +29,17 @@ public class WeaponRotator : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!selectedTarget)
+        if (!targetPosition.HasValue)
             return;
 
-        var targetDirection = selectedTarget.transform.position - weapon.transform.position;
+        var targetDirection = targetPosition.Value - weapon.transform.position;
 
         var newRotation = Quaternion.LookRotation(targetDirection);
         weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, newRotation, rotationSpeed);
     }
 
-    public void SetTarget(TowerTarget target)
+    public void SetTargetPosition(Vector3 targetPosition)
     {
-        selectedTarget = target;
+        this.targetPosition = targetPosition;
     }
 }

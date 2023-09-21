@@ -27,7 +27,7 @@ public class TranslationMover : Mover
                 return;
             }
 
-            var translation = vectorToTarget.normalized * Speed;
+            var translation = vectorToTarget.normalized * speed;
 
             if (translation.magnitude > vectorToTargetMagnitude)
             {
@@ -44,19 +44,19 @@ public class TranslationMover : Mover
         var translationsInSecond = 1f / Time.fixedDeltaTime;
 
         var vectorToTarget = targetPosition.Value - transform.position;
-        var translation = vectorToTarget.normalized * Speed;
+        var translation = vectorToTarget.normalized * speed;
 
         var futurePosition = transform.position + translation * translationsInSecond * seconds;
 
         return futurePosition;
     }
 
-    public override float CalculateTimeToPosition(Vector3 position)
+    public override float CalculateTimeToPosition(Vector3 startPosition, Vector3 targetPosition)
     {
         var translationsInSecond = 1f / Time.fixedDeltaTime;
 
-        var vectorToPosition = position - transform.position;
-        var translation = vectorToPosition.normalized * Speed;
+        var vectorToPosition = targetPosition - startPosition;
+        var translation = vectorToPosition.normalized * speed;
         var translationMagnitude = translation.magnitude;
 
         var speedPerSecond = translationMagnitude * translationsInSecond;

@@ -2,68 +2,42 @@ using UnityEngine;
 
 public class TowerProjectile : MonoBehaviour
 {
-    [SerializeField]
-    private Mover mover;
+    private TowerTarget followTarget;
 
-    [SerializeField]
-    private ProjectileType projectileType;
+    [field: SerializeField] public Mover Mover { get; private set; }
 
-    private TowerTarget selectedTarget;
-
-    public void SetTarget(TowerTarget target)
+    public void FollowTarget(TowerTarget target)
     {
-        selectedTarget = target;
+        followTarget = target;
+    }
 
-        if (selectedTarget != null)
-        {
-            if (projectileType == ProjectileType.StaticTarget)
-            {
-                var timeToTargetCurrentPosition = mover.CalculateTimeToPosition(selectedTarget.transform.position);
+    public void GoToPosition(Vector3 position)
+    {
+        followTarget = null;
 
-                var targetFuturePosition = target.Mover.CalculateFuturePosition(timeToTargetCurrentPosition);
-                var timeToFuturePosition = mover.CalculateTimeToPosition(targetFuturePosition);
-
-                targetFuturePosition = target.Mover.CalculateFuturePosition(timeToFuturePosition);
-
-                mover.SetTargetPosition(targetFuturePosition);
-            }
-            else
-            {
-                mover.SetTargetPosition(selectedTarget.transform.position);
-            }
-        }
-        else
-        {
-            mover.SetTargetPosition(null);
-        }
+        Mover.SetTargetPosition(position);
     }
 
     private void OnEnable()
     {
-        Debug.Assert(mover != null);
+        Debug.Assert(Mover != null);
 
-        mover.TargetAchieved += HandleTargetAchieved;
+        Mover.TargetAchieved += HandleTargetAchieved;
     }
 
     private void Update()
     {
-        if (projectileType == ProjectileType.FollowTarget && selectedTarget)
-            mover.SetTargetPosition(selectedTarget.transform.position);
+        if (followTarget)
+            Mover.SetTargetPosition(followTarget.transform.position);
     }
 
     private void OnDisable()
     {
-        mover.TargetAchieved -= HandleTargetAchieved;
+        Mover.TargetAchieved -= HandleTargetAchieved;
     }
 
     private void HandleTargetAchieved()
     {
         gameObject.SetActive(false);
     }
-}
-
-public enum ProjectileType
-{
-    StaticTarget,
-    FollowTarget
 }

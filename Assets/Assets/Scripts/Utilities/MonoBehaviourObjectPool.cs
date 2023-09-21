@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -65,7 +66,7 @@ namespace TowerDefence
 
         private Poolable AddNewInstance()
         {
-            var instance = Object.Instantiate(objectPrefab).gameObject;
+            var instance = UnityEngine.Object.Instantiate(objectPrefab).gameObject;
             var poolableComponent = instance.AddComponent<Poolable>();
 
             poolableComponent.CacheComponent<TMainComponent>();
@@ -86,7 +87,7 @@ namespace TowerDefence
             instance.Enabled -= OnInstanceEnabled;
             instance.Disabled -= OnInstanceDisabled;
 
-            Object.Destroy(instance.gameObject);
+            UnityEngine.Object.Destroy(instance.gameObject);
         }
 
         private void OnInstanceEnabled(Poolable instance)

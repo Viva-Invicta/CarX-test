@@ -1,25 +1,24 @@
 using TowerDefence;
 using UnityEngine;
 
-public class TowerWeapon : MonoBehaviour
+public abstract class TowerWeapon : MonoBehaviour
 {
     private const int PoolCapacity = 10;
-
-    [SerializeField]
-    private TowerProjectile projectilePrefab;
-
-    [SerializeField]
-    private Transform shootPoint;
-
     [SerializeField]
     private Transform projectilesRoot;
 
-    private TowerTarget selectedTarget;
-    private MonoBehaviourObjectPool<TowerProjectile> pool;
+    [SerializeField]
+    protected Transform shootPoint;
+
+    [SerializeField]
+    protected TowerProjectile projectilePrefab; 
+
+    protected TowerTarget selectedTarget;
+    protected MonoBehaviourObjectPool<TowerProjectile> projectilesPool;
 
     private void OnEnable()
     {
-        pool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, projectilesRoot, projectilePrefab);
+        projectilesPool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, projectilesRoot, projectilePrefab);
     }
 
     public void SetTarget(TowerTarget target)
@@ -29,15 +28,15 @@ public class TowerWeapon : MonoBehaviour
 
     public void Shoot()
     {
-        if (pool == null)
+        if (projectilesPool == null)
             return;
 
         if (!selectedTarget)
             return;
 
-        var projectile = pool.GetInstance();
-        projectile.transform.position = shootPoint.position;
-
-        projectile.SetTarget(selectedTarget);
+        ShootInternal();
     }
+
+    protected abstract void ShootInternal();
+    protected virtual void OnAfterTargetSet() { }
 }

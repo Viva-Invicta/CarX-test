@@ -12,9 +12,6 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private TowerTargetSelector targetSelector;
 
-    [SerializeField]
-    private WeaponRotator weaponRotator;
-
     private void Start()
     {
         Debug.Assert(weapon);
@@ -32,8 +29,6 @@ public class Tower : MonoBehaviour
 
     private void OnTargetUpdated(TowerTarget target)
     {
-        if (weaponRotator)
-            weaponRotator.SetTarget(target);
         weapon.SetTarget(target);
     }
 
@@ -41,8 +36,7 @@ public class Tower : MonoBehaviour
     {
         while (true)
         {
-            if (weaponRotator && weaponRotator.IsLookingAtTarget)
-                weapon.Shoot();
+            weapon.Shoot();
 
             yield return new WaitForSecondsRealtime(shootInterval);
         }
