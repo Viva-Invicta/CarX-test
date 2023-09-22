@@ -34,8 +34,13 @@ public class WeaponRotator : MonoBehaviour
 
         var targetDirection = targetPosition.Value - weapon.transform.position;
 
-        var newRotation = Quaternion.LookRotation(targetDirection);
-        weapon.transform.rotation = Quaternion.RotateTowards(weapon.transform.rotation, newRotation, rotationSpeed);
+        var targetRotation = Quaternion.LookRotation(targetDirection);
+        var newRotationY = Quaternion.RotateTowards(weapon.transform.rotation, targetRotation, rotationSpeed).eulerAngles.y;
+
+        var rotation = weapon.transform.rotation.eulerAngles;
+        rotation.y = newRotationY;
+
+        weapon.transform.rotation = Quaternion.Euler(rotation);
     }
 
     public void SetTargetPosition(Vector3 targetPosition)

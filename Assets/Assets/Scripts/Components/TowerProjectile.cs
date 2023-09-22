@@ -16,7 +16,11 @@ public class TowerProjectile : MonoBehaviour
         followTarget = null;
 
         Mover.SetTargetPosition(position);
+
+        OnAfterSetPosition();
     }
+
+    protected virtual void OnAfterSetPosition() { }
 
     private void OnEnable()
     {

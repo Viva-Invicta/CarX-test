@@ -7,18 +7,18 @@ public class TranslationMover : Mover
 
     public override event Action TargetAchieved;
 
-    private Vector3? targetPosition = null;
+    public override Vector3? TargetPosition { get; protected set; }
 
     public override void SetTargetPosition(Vector3? targetPosition)
     {
-        this.targetPosition = targetPosition;
+        this.TargetPosition = targetPosition;
     }
 
     private void FixedUpdate()
     {
-        if (targetPosition.HasValue)
+        if (TargetPosition.HasValue)
         {
-            var vectorToTarget = targetPosition.Value - transform.position;
+            var vectorToTarget = TargetPosition.Value - transform.position;
             var vectorToTargetMagnitude = vectorToTarget.magnitude;
 
             if (vectorToTargetMagnitude < AchieveTreshold)
@@ -43,7 +43,7 @@ public class TranslationMover : Mover
     {
         var translationsInSecond = 1f / Time.fixedDeltaTime;
 
-        var vectorToTarget = targetPosition.Value - transform.position;
+        var vectorToTarget = TargetPosition.Value - transform.position;
         var translation = vectorToTarget.normalized * speed;
 
         var futurePosition = transform.position + translation * translationsInSecond * seconds;
