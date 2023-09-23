@@ -4776,8 +4776,8 @@ GameObject:
   m_Component:
   - component: {fileID: 488822}
   - component: {fileID: 1508920035590786590}
-  - component: {fileID: 4964041236025452735}
-  - component: {fileID: 620577328514444900}
+  - component: {fileID: 84835847876998667}
+  - component: {fileID: 2172089001346988202}
   m_Layer: 0
   m_Name: CannonProjectile
   m_TagString: Untagged
@@ -4813,8 +4813,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee6646b50475da448dba5758a6c3d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.4
---- !u!114 &4964041236025452735
+  speed: 0.2
+--- !u!114 &84835847876998667
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4823,76 +4823,67 @@ MonoBehaviour:
   m_GameObject: {fileID: 123704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8355c2f8fc3c994aaea8f0e4e9f31a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8c42a2bb651a1174c8f8272607551e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Damage>k__BackingField: 10
---- !u!114 &620577328514444900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78c5d5dabba4e8b4fa9179ed9d916caa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  animation: {fileID: 2172089001346988202}
   <Mover>k__BackingField: {fileID: 1508920035590786590}
-  maxHeight: 4
-  animatedProjectile: {fileID: 7033653272454151355}
+--- !u!114 &2172089001346988202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9e0411c415a294696aa8c337ffb7c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHeight: 10
   gravityAnimationCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0083351135
-      value: -0.0047187805
-      inSlope: 4.97962
-      outSlope: 4.97962
-      tangentMode: 34
+      time: 0
+      value: 0
+      inSlope: 5.597484
+      outSlope: 5.597484
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.1438452
     - serializedVersion: 3
-      time: 0.12732938
-      value: 0.67083883
-      inSlope: 2.9299874
-      outSlope: 2.9299874
-      tangentMode: 34
+      time: 0.26069742
+      value: 0.90266097
+      inSlope: 0.9718527
+      outSlope: 0.9718527
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.28528735
+      outWeight: 0.044276632
     - serializedVersion: 3
-      time: 0.43184525
-      value: 0.93892086
-      inSlope: -0.072172105
-      outSlope: -0.072172105
+      time: 0.43247673
+      value: 0.9814377
+      inSlope: -0.57645446
+      outSlope: -0.57645446
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.4320326
     - serializedVersion: 3
-      time: 0.88449705
-      value: 0.34960973
-      inSlope: -1.6587176
-      outSlope: -1.6587176
+      time: 0.97500813
+      value: 0.0023584887
+      inSlope: -0.72519153
+      outSlope: -0.72519153
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.029748341
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.9916687
-      value: 0
-      inSlope: -3.2621474
-      outSlope: -3.2621474
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.30643678
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  animationTarget: {fileID: 7033653272454151355}
 --- !u!1 &581397173178148565
 GameObject:
   m_ObjectHideFlags: 0
@@ -4906,8 +4897,9 @@ GameObject:
   - component: {fileID: 4451285539257800442}
   - component: {fileID: 9141186597016422042}
   - component: {fileID: 2943080764666839866}
+  - component: {fileID: 1183456521154528018}
   m_Layer: 0
-  m_Name: CannonProjectile
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5027,3 +5019,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1183456521154528018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581397173178148565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8355c2f8fc3c994aaea8f0e4e9f31a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Damage>k__BackingField: 20

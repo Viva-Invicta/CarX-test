@@ -1,13 +1,10 @@
-using UnityEngine;
+using TowerDefence.Components;
 
-public class TowerTargetStatusUpdatedEvent
+namespace TowerDefence.Events
 {
-    public TowerTarget Target { get; private set; }
-    public bool IsAvailable { get; private set; }   
-
-    public TowerTargetStatusUpdatedEvent(TowerTarget target, bool isAvailable)
+    public record TowerTargetStatusUpdatedEvent(TowerTarget Target, bool IsAvailable)
     {
-        Target = target;
-        IsAvailable = isAvailable;
+        public TowerTarget Target { get; } = Target;
+        public bool IsAvailable { get; } = IsAvailable;
     }
 }

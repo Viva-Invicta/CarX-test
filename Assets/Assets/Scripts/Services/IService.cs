@@ -1,4 +1,7 @@
-public interface IService
+namespace TowerDefence.Services
 {
-    public void Initialize();
+    public interface IService
+    {
+        public void Initialize();
+    }
 }

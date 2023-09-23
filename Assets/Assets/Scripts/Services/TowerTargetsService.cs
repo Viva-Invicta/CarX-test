@@ -1,60 +1,61 @@
 using System.Collections.Generic;
+using TowerDefence.Components;
+using TowerDefence.Events;
 using UnityEngine;
 
-public class TowerTargetsService : IService
+namespace TowerDefence.Services
 {
-    private HashSet<TowerTarget> availableTargets;
-
-    public void Initialize()
+    public class TowerTargetsService : IService
     {
-        availableTargets = new HashSet<TowerTarget>();
-        EventBus.Subscribe<TowerTargetStatusUpdatedEvent>(HandleTargetUpdated);
-    }
+        private HashSet<TowerTarget> availableTargets;
 
-    public TowerTarget GetNearestTargetFromPosition(Vector3 position, out float sqrDistance)
-    {
-        TowerTarget nearestTarget = null;
-        sqrDistance = float.MaxValue;
-
-        foreach (var target in availableTargets) 
+        public void Initialize()
         {
-            var sqrDistanceToAvailableTarget = (position - target.transform.position).sqrMagnitude;
+            availableTargets = new HashSet<TowerTarget>();
+            StaticEventBus.Subscribe<TowerTargetStatusUpdatedEvent>(HandleTargetUpdated);
+        }
 
-            if (sqrDistanceToAvailableTarget < sqrDistance)
+        public TowerTarget GetNearestTargetFromPosition(Vector3 position, out float sqrDistance)
+        {
+            TowerTarget nearestTarget = null;
+            sqrDistance = float.MaxValue;
+
+            foreach (var target in availableTargets)
             {
-                nearestTarget = target;
-                sqrDistance = sqrDistanceToAvailableTarget;
+                var sqrDistanceToAvailableTarget = (position - target.transform.position).sqrMagnitude;
+
+                if (sqrDistanceToAvailableTarget < sqrDistance)
+                {
+                    nearestTarget = target;
+                    sqrDistance = sqrDistanceToAvailableTarget;
+                }
+            }
+            return nearestTarget;
+        }
+
+        private void HandleTargetUpdated(TowerTargetStatusUpdatedEvent targetUpdatedEvent)
+        {
+            var target = targetUpdatedEvent.Target;
+
+            if (target)
+            {
+                if (targetUpdatedEvent.IsAvailable)
+                    HandleTargetAdded(target);
+                else
+                    HandleTargetRemoved(target);
             }
         }
-        return nearestTarget;
-    }
 
-    private void HandleTargetUpdated(TowerTargetStatusUpdatedEvent targetUpdatedEvent)
-    {
-        var target = targetUpdatedEvent.Target;
-
-        if (target)
+        private void HandleTargetAdded(TowerTarget target)
         {
-            if (targetUpdatedEvent.IsAvailable)
-            {
-                HandleTargetAdded(target);
-            }
-            else
-            { 
-                HandleTargetRemoved(target);
-            }
-        } 
-    }
+            if (!availableTargets.Contains(target))
+                availableTargets.Add(target);
+        }
 
-    private void HandleTargetAdded(TowerTarget target)
-    {
-        if (!availableTargets.Contains(target))
-            availableTargets.Add(target);
-    }
-
-    private void HandleTargetRemoved(TowerTarget target)
-    {
-        if (availableTargets.Contains(target))
-            availableTargets.Remove(target);    
+        private void HandleTargetRemoved(TowerTarget target)
+        {
+            if (availableTargets.Contains(target))
+                availableTargets.Remove(target);
+        }
     }
 }

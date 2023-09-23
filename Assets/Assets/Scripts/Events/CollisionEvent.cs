@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class CollisionEvent
+namespace TowerDefence.Events
 {
-    public Collider Collider { get; set; }
-    public Collider OtherCollider { get; set; }
+    public record CollisionEvent(Collider Collider, Collider OtherCollider)
+    {
+        public Collider Collider { get; } = Collider;
+        public Collider OtherCollider { get; } = OtherCollider;
+    }
 }

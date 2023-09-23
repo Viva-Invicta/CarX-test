@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using TowerDefence.Components;
 using UnityEngine;
 
 namespace TowerDefence
@@ -8,12 +8,11 @@ namespace TowerDefence
     public class MonoBehaviourObjectPool<TMainComponent>
         where TMainComponent : MonoBehaviour
     {
-        private readonly TMainComponent objectPrefab;
         private readonly int capacity;
         private readonly Transform parent;
+        private readonly TMainComponent objectPrefab;
 
         private HashSet<Poolable> availableInstances;
-        private HashSet<Poolable> lockedInstances;
 
         public MonoBehaviourObjectPool(int capacity, Transform parent, TMainComponent objectPrefab)
         {
@@ -31,24 +30,11 @@ namespace TowerDefence
             Debug.Assert(parent);
 
             availableInstances = new HashSet<Poolable>(capacity);
-            lockedInstances = new HashSet<Poolable>(capacity);
 
             for (var i = 0; i < capacity; i++)
             {
                 AddNewInstance();
             }
-        }
-
-        public void Release()
-        {
-            foreach (var instance in availableInstances)
-                DestroyInstance(instance);
-
-            foreach (var instance in lockedInstances)
-                DestroyInstance(instance);
-
-            availableInstances = null;
-            lockedInstances = null;
         }
 
         public TMainComponent GetInstance()
@@ -66,7 +52,7 @@ namespace TowerDefence
 
         private Poolable AddNewInstance()
         {
-            var instance = UnityEngine.Object.Instantiate(objectPrefab).gameObject;
+            var instance = Object.Instantiate(objectPrefab).gameObject;
             var poolableComponent = instance.AddComponent<Poolable>();
 
             poolableComponent.CacheComponent<TMainComponent>();
@@ -82,23 +68,13 @@ namespace TowerDefence
             return poolableComponent;
         }
 
-        private void DestroyInstance(Poolable instance)
-        {
-            instance.Enabled -= OnInstanceEnabled;
-            instance.Disabled -= OnInstanceDisabled;
-
-            UnityEngine.Object.Destroy(instance.gameObject);
-        }
-
         private void OnInstanceEnabled(Poolable instance)
         {
             availableInstances.Remove(instance);
-            lockedInstances.Add(instance);
         }
 
         private void OnInstanceDisabled(Poolable instance)
         {
-            lockedInstances.Remove(instance);
             availableInstances.Add(instance);
         }
     }

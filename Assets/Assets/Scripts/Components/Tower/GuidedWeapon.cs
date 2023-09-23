@@ -1,8 +1,8 @@
-public class TowerGuidedWeapon : TowerWeapon
+namespace TowerDefence.Components
 {
-    protected override void ShootInternal()
+    public class GuidedWeapon : Weapon
     {
-        if (selectedTarget)
+        protected override void ShootInternal()
         {
             var projectileInstance = projectilesPool.GetInstance();
             projectileInstance.transform.position = shootPoint.position;

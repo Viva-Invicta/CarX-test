@@ -1,3 +1,4 @@
+using TowerDefence.Services;
 using UnityEngine;
 
 public class EntryPoint : MonoBehaviour

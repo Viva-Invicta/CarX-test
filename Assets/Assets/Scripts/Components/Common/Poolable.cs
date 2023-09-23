@@ -1,17 +1,20 @@
 using System;
 using UnityEngine;
 
-namespace TowerDefence
+namespace TowerDefence.Components
 {
     public class Poolable : MonoBehaviour
     {
         public event Action<Poolable> Enabled;
         public event Action<Poolable> Disabled;
 
-        public MonoBehaviour CachedComponent { get; private set; }
+        public MonoBehaviour CachedComponent
+        { 
+            get;
+            private set; 
+        }
 
-        public void CacheComponent<T>()
-            where T : MonoBehaviour
+        public void CacheComponent<T>() where T : MonoBehaviour
         {
             CachedComponent = GetComponent<T>();
 
