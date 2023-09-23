@@ -36,6 +36,9 @@ namespace TowerDefence.Components
 
         public void FollowTarget(TowerTarget target)
         {
+            if (followTarget)
+                followTarget.Disabled -= OnTargetDisabled;
+
             followTarget = target;
 
             if (followTarget)
@@ -44,7 +47,11 @@ namespace TowerDefence.Components
 
         public void GoToPosition(Vector3 position)
         {
-            followTarget = null;
+            if (followTarget)
+            {
+                followTarget.Disabled -= OnTargetDisabled;
+                followTarget = null;
+            }
 
             Mover.SetTargetPosition(position);
 
@@ -60,7 +67,6 @@ namespace TowerDefence.Components
             if (!followTarget)
                 return;
             
-            followTarget.Disabled -= OnTargetDisabled;
             GoToPosition(followTarget.transform.position);
         }
 
