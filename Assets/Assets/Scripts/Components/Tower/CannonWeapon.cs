@@ -19,7 +19,7 @@ namespace TowerDefence.Components
             }
         }
 
-        protected override void ShootInternal()
+        protected override TowerProjectile ShootInternal()
         {
             if (weaponRotator.IsLookingAtTargetPosition)
             {
@@ -27,7 +27,11 @@ namespace TowerDefence.Components
                 projectile.transform.position = shootPoint.position;
 
                 projectile.GoToPosition(GetPredictedTargetPosition(ShootPositionPredictAccuracy));
+
+                return projectile;
             }
+
+            return null;
         }
 
         private Vector3 GetPredictedTargetPosition(int accuracy)

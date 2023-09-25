@@ -792,6 +792,7 @@ MonoBehaviour:
   projectilesRoot: {fileID: 1431588271}
   shootPoint: {fileID: 1262217986}
   projectilePrefab: {fileID: 84835847876998667, guid: 4124357cfe121804f9eea0a690ce3b52, type: 3}
+  particlesPrefab: {fileID: -7050872927641330795, guid: 1fa3cb7fbcc3e914cbafc4e2ddd90776, type: 3}
   weaponRotator: {fileID: 1143686478}
 --- !u!114 &1143686478
 MonoBehaviour:
@@ -1105,6 +1106,7 @@ MonoBehaviour:
   projectilesRoot: {fileID: 1870082934}
   shootPoint: {fileID: 1920609368}
   projectilePrefab: {fileID: 755814565958747367, guid: 83b1bef18dd7ed947ae8f4d857327102, type: 3}
+  particlesPrefab: {fileID: 0}
 --- !u!4 &2062558235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 494260, guid: adff1ae3360dcb14fb5fbd7774d0ce0d, type: 3}

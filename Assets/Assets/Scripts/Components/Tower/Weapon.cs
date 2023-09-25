@@ -5,7 +5,7 @@ namespace TowerDefence.Components
 {
     public abstract class Weapon : MonoBehaviour
     {
-        private const int PoolCapacity = 10;
+        private const int PoolCapacity = 5;
 
         [SerializeField]
         private Transform projectilesRoot;
@@ -16,12 +16,19 @@ namespace TowerDefence.Components
         [SerializeField]
         protected TowerProjectile projectilePrefab;
 
+        [SerializeField]
+        private ProjectileParticles particlesPrefab;
+
         protected TowerTarget selectedTarget;
         protected MonoBehaviourObjectPool<TowerProjectile> projectilesPool;
+        private MonoBehaviourObjectPool<ProjectileParticles> particlesPool;
 
         private void OnEnable()
         {
             projectilesPool = new MonoBehaviourObjectPool<TowerProjectile>(PoolCapacity, projectilesRoot, projectilePrefab);
+
+            if (particlesPrefab)
+                particlesPool = new MonoBehaviourObjectPool<ProjectileParticles>(PoolCapacity, projectilesRoot, particlesPrefab);
         }
 
         public void SetTarget(TowerTarget target)
@@ -34,9 +41,14 @@ namespace TowerDefence.Components
             if (!selectedTarget)
                 return;
 
-            ShootInternal();
+            var projectile = ShootInternal();
+            if (projectile && particlesPool != null)
+            {
+                var particles = particlesPool.GetInstance();
+                particles.SetAssociatedProjectile(projectile);
+            }
         }
 
-        protected abstract void ShootInternal();
+        protected abstract TowerProjectile ShootInternal();
     }
 }

@@ -1,13 +1,23 @@
+using System;
 using UnityEngine;
 
 namespace TowerDefence.Components
 {
     public class TowerProjectile : MonoBehaviour
     {
-        private TowerTarget followTarget;
+        public event Action TargetAchieved;
 
         [SerializeField]
         private Animation animation;
+
+        private TowerTarget followTarget;
+
+        [field: SerializeField]
+        public Transform Visual
+        {
+            get;
+            private set;
+        }
 
         [field: SerializeField]
         public TranslationMover Mover
@@ -75,6 +85,7 @@ namespace TowerDefence.Components
             if (animation)
                 animation.StopAnimation();
 
+            TargetAchieved?.Invoke();
             gameObject.SetActive(false);
         }
     }
